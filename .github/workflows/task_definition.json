@@ -1,0 +1,48 @@
+{
+  "family": "documentportaltd",
+  "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::694509210613:role/ecsTaskExecutionRole",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "8192",
+  "containerDefinitions": [
+    {
+      "name": "document-portal-container",
+      "image": "694509210613.dkr.ecr.ap-southeast-2.amazonaws.com/documentportalliveclass",
+      "cpu": 1024,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp",
+          "name": "document-portal-container-8080-tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "environment": [
+        {
+          "name": "ENV",
+          "value": "production"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "API_KEYS",
+          "valueFrom": "arn:aws:secretsmanager:ap-southeast-2:694509210613:secret:api_keys_deploy-N1EKpj"
+          
+        }
+        
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/documentportaltd",
+          "awslogs-region": "ap-southeast-2",
+          "awslogs-stream-prefix": "ecs",
+          "awslogs-create-group": "true"
+        }
+      }
+    }
+  ]
+}
