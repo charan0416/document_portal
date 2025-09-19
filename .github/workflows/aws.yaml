@@ -97,5 +97,4 @@ jobs:
       - name: Done!
         run: echo "Deployed to ECS Fargate Successfully"
 
-        - name: Debug cluster and service
-  
+        
